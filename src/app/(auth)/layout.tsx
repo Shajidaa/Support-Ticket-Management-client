@@ -2,6 +2,7 @@ import { HeadsetIcon } from "lucide-react";
 
 import { APP_NAME } from "@/lib/constants";
 
+
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -12,6 +13,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
         <div className="max-w-md space-y-3">
           <h1 className="font-heading text-4xl leading-tight">
+         
             Track, assign, and resolve support tickets in one place.
           </h1>
           <p className="text-sm text-primary-foreground/80">

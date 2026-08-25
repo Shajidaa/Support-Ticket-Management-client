@@ -5,11 +5,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/providers/auth-provider";
 import { QueryProvider } from "@/providers/query-provider";
-import { ThemeProvider } from "@/providers/theme-provider";
+
 import { cn } from "@/lib/utils";
 import { APP_NAME } from "@/lib/constants";
 
 import "./globals.css";
+
 
 const loraHeading = Lora({ subsets: ["latin"], variable: "--font-heading" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider>
+
           <QueryProvider>
             <AuthProvider>
               <TooltipProvider>
@@ -48,7 +49,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </TooltipProvider>
             </AuthProvider>
           </QueryProvider>
-        </ThemeProvider>
+        
+        
       </body>
     </html>
   );
