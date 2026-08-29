@@ -20,6 +20,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     queryKey: ["auth", "session"],
     queryFn: authApi.session,
     retry: false,
+
   });
 
   const user = data ?? null;

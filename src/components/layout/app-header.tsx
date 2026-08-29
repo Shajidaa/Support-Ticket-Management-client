@@ -4,7 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 
 import { UserMenu } from "@/components/layout/user-menu";
-import { AnimatedThemeToggler } from "../ui/animated-theme-toggler";
+
 
 export function AppHeader({ title, description }: { title: string; description?: string }) {
   return (
@@ -17,7 +17,7 @@ export function AppHeader({ title, description }: { title: string; description?:
           <p className="truncate text-xs text-muted-foreground">{description}</p>
         ) : null}
       </div>
-   <AnimatedThemeToggler variant="star" />
+
       <UserMenu />
     </header>
   );
