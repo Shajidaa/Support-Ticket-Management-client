@@ -26,6 +26,7 @@ export async function backendRequest<T>(
     ...rest,
     headers: requestHeaders,
     cache: "no-store",
+
   });
 
   let payload: ApiResponse<T> | null = null;

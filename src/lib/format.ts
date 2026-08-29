@@ -11,7 +11,7 @@ export function formatDate(value?: string) {
 }
 
 export function isPopulatedUser(value: TicketUserRef | null | undefined): value is PopulatedUser {
-  return Boolean(value) && typeof value === "object" && "name" in value;
+  return value !== null && value !== undefined && typeof value === "object" && "name" in value;
 }
 
 export function getUserName(value: TicketUserRef | null | undefined, fallback = "Unknown") {

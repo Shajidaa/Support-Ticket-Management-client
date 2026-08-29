@@ -55,7 +55,7 @@
   --card-foreground: oklch(0.145 0.008 326);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0.008 326);
-  --primary: oklch(0.212 0.019 322.12);
+  --primary: #1d161e;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.96 0.003 325.6);
   --secondary-foreground: oklch(0.212 0.019 322.12);
@@ -121,14 +121,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
 }
-  ::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
