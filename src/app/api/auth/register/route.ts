@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { setAuthCookies } from "@/lib/auth/cookies";
 import { backendRequest } from "@/lib/api/backend";
+import { decodeAccessToken } from "@/lib/auth/jwt";
 import { ApiRequestError } from "@/lib/types/api";
 
 export async function POST(request: Request) {
@@ -17,9 +18,12 @@ export async function POST(request: Request) {
 
     await setAuthCookies(data);
 
+    const user = decodeAccessToken(data.accessToken);
+
     return NextResponse.json({
       success: true,
       message: "Account created successfully",
+      data: user,
     });
   } catch (error) {
     const status = error instanceof ApiRequestError ? error.statusCode : 500;

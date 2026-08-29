@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { LogOutIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -21,14 +22,19 @@ import { useAuth } from "@/providers/auth-provider";
 export function UserMenu() {
   const { user } = useAuth();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   if (!user) return null;
 
   const handleLogout = async () => {
     await authApi.logout();
+    queryClient.removeQueries({ queryKey: ["tickets"] });
+    queryClient.removeQueries({ queryKey: ["ticket"] });
+    queryClient.removeQueries({ queryKey: ["ticket-comments"] });
+    queryClient.removeQueries({ queryKey: ["staff"] });
+    queryClient.setQueryData(["auth", "session"], null);
     toast.success("Signed out");
     router.push("/login");
-    router.refresh();
   };
 
   return (

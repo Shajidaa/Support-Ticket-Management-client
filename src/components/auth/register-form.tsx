@@ -46,11 +46,14 @@ export function RegisterForm() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await authApi.register(values);
-      await queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
+      const user = await authApi.register(values);
+      queryClient.removeQueries({ queryKey: ["tickets"] });
+      queryClient.removeQueries({ queryKey: ["ticket"] });
+      queryClient.removeQueries({ queryKey: ["ticket-comments"] });
+      queryClient.removeQueries({ queryKey: ["staff"] });
+      queryClient.setQueryData(["auth", "session"], user);
       toast.success("Account created");
       router.push("/");
-      router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unable to register");
     }

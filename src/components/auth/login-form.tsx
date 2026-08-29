@@ -30,11 +30,14 @@ export function LoginForm() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await authApi.login(values);
-      await queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
+      const user = await authApi.login(values);
+      queryClient.removeQueries({ queryKey: ["tickets"] });
+      queryClient.removeQueries({ queryKey: ["ticket"] });
+      queryClient.removeQueries({ queryKey: ["ticket-comments"] });
+      queryClient.removeQueries({ queryKey: ["staff"] });
+      queryClient.setQueryData(["auth", "session"], user);
       toast.success("Welcome back");
       router.push("/");
-      router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unable to sign in");
     }
