@@ -118,6 +118,7 @@ export default function TicketDetailPage() {
                     submitLabel="Save changes"
                     isSubmitting={updateTicket.isPending}
                     onSubmit={onUpdate}
+                    isOwner={isCustomer}
                   />
                 ) : (
                   <p className="whitespace-pre-wrap text-sm leading-6">{ticket.description}</p>

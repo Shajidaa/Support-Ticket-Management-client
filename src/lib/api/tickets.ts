@@ -37,6 +37,8 @@ export const ticketApi = {
   remove: (id: string) => apiClient.delete<null>(`/api/v1/ticket/${id}`),
   assign: (id: string, payload: AssignTicketPayload) =>
     apiClient.patch<Ticket>(`/api/v1/ticket/${id}/assign`, payload),
+  listAssigned: () =>
+    apiClient.get<Ticket[]>("/api/v1/ticket/assign-tickets"),
   comments: (id: string) =>
     apiClient.get<TicketComment[]>(`/api/v1/ticket/${id}/comments`),
   addComment: (id: string, content: string) =>

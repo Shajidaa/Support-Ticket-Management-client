@@ -5,15 +5,22 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ticketApi } from "@/lib/api/tickets";
 import type { TicketListQuery } from "@/lib/types/ticket";
 
+export function useAssignedTickets() {
+  return useQuery({
+    queryKey: ["tickets", "assigned"],
+    queryFn: ticketApi.listAssigned,
+  });
+}
+
 export function useTickets(query: TicketListQuery, fetchAllStatuses: boolean) {
   return useQuery({
     queryKey: ["tickets", query, fetchAllStatuses],
     queryFn: () =>
       fetchAllStatuses
         ? ticketApi.listAllStatuses({
-            priority: query.priority,
-            assignedTo: query.assignedTo,
-          })
+          priority: query.priority,
+          assignedTo: query.assignedTo,
+        })
         : ticketApi.list(query),
   });
 }

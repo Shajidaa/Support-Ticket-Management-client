@@ -27,17 +27,24 @@ const ticketSchema = z.object({
 
 export type TicketFormValues = z.infer<typeof ticketSchema>;
 
+// Statuses a ticket owner (customer) can set when editing
+const OWNER_EDITABLE_STATUSES = ["Resolved", "Closed"] as const;
+
 export function TicketForm({
   ticket,
   submitLabel,
   onSubmit,
   isSubmitting,
+  isOwner = false,
 }: {
   ticket?: Ticket;
   submitLabel: string;
   isSubmitting?: boolean;
   onSubmit: (values: TicketFormValues) => Promise<void> | void;
+  isOwner?: boolean;
 }) {
+  const isEditing = Boolean(ticket);
+
   const form = useForm<TicketFormValues>({
     resolver: zodResolver(ticketSchema),
     defaultValues: {
@@ -76,25 +83,36 @@ export function TicketForm({
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label>Status</Label>
-          <Select
-            value={form.watch("status")}
-            onValueChange={(value) =>
-              form.setValue("status", value as TicketFormValues["status"], {
-                shouldValidate: true,
-              })
-            }
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {TICKET_STATUSES.map((status) => (
-                <SelectItem key={status} value={status}>
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {isEditing && isOwner ? (
+            // Owner editing: can only move to Resolved or Closed
+            <Select
+              value={form.watch("status")}
+              onValueChange={(value) =>
+                form.setValue("status", value as TicketFormValues["status"], {
+                  shouldValidate: true,
+                })
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {OWNER_EDITABLE_STATUSES.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            // Creating a ticket or non-owner: status is locked to current value
+            <Input
+              id="status"
+              value={ticket?.status ?? "Open"}
+              disabled
+              className="w-full bg-muted cursor-not-allowed"
+            />
+          )}
         </div>
         <div className="grid gap-2">
           <Label>Priority</Label>

@@ -1,6 +1,7 @@
 "use client";
 
 import { AppHeader } from "@/components/layout/app-header";
+import { AssignedTickets } from "@/components/dashboard/assigned-tickets";
 import { RecentTickets } from "@/components/dashboard/recent-tickets";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { TicketStatusChart } from "@/components/dashboard/ticket-status-chart";
@@ -54,6 +55,7 @@ export default function OverviewPage() {
             </>
           )}
         </div>
+        {isStaff ? <AssignedTickets /> : null}
       </div>
     </>
   );
